@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <div class="flex flex-col gap-4 mt-10">
+      <h1 class="font-bold text-2xl">Crowdfunding</h1>
+      <p class="">Utilizing Ethereum for Decentralized Crowdfunding</p>
+    </div>
+
+    <button>Start a Project</button>
+
+    <CreateProject />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import CreateProject from '@/components/CreateProject'
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    CreateProject
   }
 }
 </script>
