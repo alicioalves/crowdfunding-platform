@@ -1,0 +1,7 @@
+{
+    "projectName": "CrowdfundingPlatform",
+    "namespace": "CrowdfundingPlatform.Contracts",
+    "lang": 0,
+    "autoCodeGen": true,
+    "projectPath": "../"
+}
