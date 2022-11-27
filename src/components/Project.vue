@@ -23,7 +23,7 @@
       <span class="font-bold"> ETH</span>
     </p>
 
-    <div>
+    <div v-if="project.currentState == 0">
       <p>Amount (in ETH)</p>
       <input
         type="number"
