@@ -19,16 +19,23 @@
         @close="shouldDisplayCreateProjectModal = false"
       />
     </template>
+
+    <div class="flex flex-col items-center mt-5">
+      <h1 class="font-bold text-xl">Projects</h1>
+      <Projects />
+    </div>
   </div>
 </template>
 
 <script>
 import CreateProject from '@/components/CreateProject'
+import Projects from '@/components/Projects.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    CreateProject
+    CreateProject,
+    Projects
   },
 
   data() {
