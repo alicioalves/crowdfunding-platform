@@ -1,96 +1,96 @@
 /* eslint-disable */
 import web3 from './web3'
 
-const address = process.env.ETH_ADDRESS
+const address = '0x1b372895a03E687F684B260D0b831e7e506F88B3'
 
 const abi = [
-  [
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: false,
-          internalType: 'address',
-          name: 'contractAddress',
-          type: 'address'
-        },
-        {
-          indexed: false,
-          internalType: 'address',
-          name: 'projectStarted',
-          type: 'address'
-        },
-        {
-          indexed: false,
-          internalType: 'string',
-          name: 'projectTitle',
-          type: 'string'
-        },
-        {
-          indexed: false,
-          internalType: 'string',
-          name: 'ProjectDesc',
-          type: 'string'
-        },
-        {
-          indexed: false,
-          internalType: 'uint256',
-          name: 'deadline',
-          type: 'uint256'
-        },
-        {
-          indexed: false,
-          internalType: 'uint256',
-          name: 'goalAmount',
-          type: 'uint256'
-        }
-      ],
-      name: 'ProjectStarted',
-      type: 'event'
-    },
-    {
-      inputs: [
-        {
-          internalType: 'string',
-          name: 'title',
-          type: 'string'
-        },
-        {
-          internalType: 'string',
-          name: 'description',
-          type: 'string'
-        },
-        {
-          internalType: 'uint256',
-          name: 'durationInDays',
-          type: 'uint256'
-        },
-        {
-          internalType: 'uint256',
-          name: 'amountToRaise',
-          type: 'uint256'
-        }
-      ],
-      name: 'startProject',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function'
-    },
-    {
-      inputs: [],
-      name: 'returnAllProjects',
-      outputs: [
-        {
-          internalType: 'contract Project[]',
-          name: '',
-          type: 'address[]'
-        }
-      ],
-      stateMutability: 'view',
-      type: 'function'
-    }
-  ]
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'contractAddress',
+        type: 'address'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'projectStarted',
+        type: 'address'
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'projectTitle',
+        type: 'string'
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'ProjectDesc',
+        type: 'string'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'goalAmount',
+        type: 'uint256'
+      }
+    ],
+    name: 'ProjectStarted',
+    type: 'event'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'title',
+        type: 'string'
+      },
+      {
+        internalType: 'string',
+        name: 'description',
+        type: 'string'
+      },
+      {
+        internalType: 'uint256',
+        name: 'durationInDays',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountToRaise',
+        type: 'uint256'
+      }
+    ],
+    name: 'startProject',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'returnAllProjects',
+    outputs: [
+      {
+        internalType: 'contract Project[]',
+        name: '',
+        type: 'address[]'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  }
 ]
+
+console.log(abi)
 
 const instance = new web3.eth.Contract(abi, address)
 
