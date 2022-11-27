@@ -3,9 +3,9 @@
     <div class="flex items-center gap-2">
       <span
         class="py-1.5 px-3 rounded-md text-white font-bold"
-        :class="stateMap[project.currentState].class"
+        :class="stateMap[currentState].class"
       >
-        {{ stateMap[project.currentState].text }}
+        {{ stateMap[currentState].text }}
       </span>
       <h1 class="font-bold text-2xl text-gray-800">
         {{ project.projectTitle }}
@@ -28,16 +28,18 @@
         type="number"
         placeholder="0 ETH"
         class="border-b border-black mr-2"
+        v-model="fundAmount"
       />
       <button
         class="px-6 py-2.5 mb-10 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        @click="fundProject()"
       >
         FUND
       </button>
     </div>
 
     <div class="flex items-center gap-4 px-10">
-      <p>{{ project.currentAmount }}</p>
+      <p>{{ currentAmount }}</p>
       <div class="w-full bg-blue-100 rounded-full h-2.5">
         <div
           class="bg-blue-600 h-2.5 rounded-full"
@@ -46,10 +48,15 @@
       </div>
       <p>{{ project.goalAmount }}</p>
     </div>
+    <div>
+      <p v-if="isLoading">Loading...</p>
+    </div>
   </div>
 </template>
 
 <script>
+import web3 from '../../contracts/web3'
+
 export default {
   name: 'Project',
 
@@ -57,6 +64,9 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    account: {
+      type: String
     }
   },
 
@@ -66,15 +76,63 @@ export default {
         { class: 'bg-blue-600', text: 'Ongoing' },
         { class: 'bg-red-600', text: 'Expired' },
         { class: 'bg-green-600', text: 'Completed' }
-      ]
+      ],
+      fundAmount: null,
+      isLoading: false,
+      updatedAmount: null,
+      updatedState: null
+    }
+  },
+
+  computed: {
+    currentAmount() {
+      if (this.updatedAmount) {
+        return this.updatedAmount
+      }
+
+      return this.project.currentAmount
+    },
+
+    currentState() {
+      if (this.updatedState) {
+        return this.updatedAmount
+      }
+
+      return this.project.currentState
     }
   },
 
   methods: {
-    calculatePercentage(project) {
-      const currentAmount = project.currentAmount
-      const goalAmount = project.goalAmount
+    calculatePercentage() {
+      const currentAmount = this.currentAmount
+      const goalAmount = this.project.goalAmount
       return `width: ${(currentAmount / goalAmount) * 100}%`
+    },
+
+    fundProject() {
+      if (!this.fundAmount) return
+      const projectContract = this.project.contract
+      this.isLoading = true
+      projectContract.methods
+        .contribute()
+        .send({
+          from: this.account,
+          value: web3.utils.toWei(this.fundAmount, 'ether')
+        })
+        .then((res) => {
+          const newTotal = parseInt(
+            res.events.FundingReceived.returnsValues.currentTotal,
+            10
+          )
+          const projectGoal = parseInt(this.project.goalAmount, 10)
+          this.updatedAmount = newTotal
+          this.isLoading = false
+
+          // If the goal is complete, set the project state to success
+          if (newTotal >= projectGoal) {
+            this.updatedState = 2
+          }
+        })
     }
   }
 }
