@@ -34,8 +34,14 @@
       />
       <button
         v-if="project.currentState == 0"
-        class="px-6 py-2.5 mb-10 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        class="px-6 py-2.5 mb-10 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
         @click="fundProject()"
+        :disabled="shouldDisableFunding"
+        :class="
+          shouldDisableFunding
+            ? 'bg-gray-400'
+            : 'bg-blue-600 focus:bg-blue-700 hover:bg-blue-700 active:bg-blue-800'
+        "
       >
         FUND
       </button>
@@ -43,9 +49,17 @@
         v-if="project.currentState == 1"
         class="px-6 py-2.5 mb-10 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
         @click="getRefund()"
+        :class="
+          shouldDisableFunding
+            ? 'bg-gray-400'
+            : 'bg-blue-600 focus:bg-blue-700 hover:bg-blue-700 active:bg-blue-800'
+        "
       >
         GET REFUND
       </button>
+      <p v-if="shouldDisableFunding" class="text-red-600">
+        You can't fund your own project.
+      </p>
     </div>
 
     <div class="flex items-center gap-4 px-10">
@@ -109,6 +123,10 @@ export default {
       }
 
       return this.project.currentState
+    },
+
+    shouldDisableFunding() {
+      return this.project.projectStarter == this.account
     }
   },
 
