@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col border border-black p-4 gap-2">
+  <div class="flex flex-col shadow-md p-4 gap-4">
     <div class="flex items-center gap-2">
       <span
-        class="py-1.5 px-3 rounded-md text-white font-bold"
+        class="py-1.5 px-3 rounded-md text-white text-sm font-bold"
         :class="stateMap[currentState].class"
       >
         {{ stateMap[currentState].text }}
@@ -63,14 +63,14 @@
     </div>
 
     <div class="flex items-center gap-4 px-10">
-      <p>{{ convertToEth(currentAmount) }}</p>
+      <p class="flex-shrink-0">{{ convertToEth(currentAmount) }} ETH</p>
       <div class="w-full bg-blue-100 rounded-full h-2.5">
         <div
           class="bg-blue-600 h-2.5 rounded-full"
           :style="calculatePercentage(project)"
         ></div>
       </div>
-      <p>{{ convertToEth(project.goalAmount) }}</p>
+      <p class="flex-shrink-0">{{ convertToEth(project.goalAmount) }} ETH</p>
     </div>
     <div>
       <p v-if="isLoading">Loading...</p>
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       stateMap: [
-        { class: 'bg-blue-600', text: 'Ongoing' },
+        { class: 'bg-blue-500', text: 'Ongoing' },
         { class: 'bg-red-600', text: 'Expired' },
         { class: 'bg-green-600', text: 'Completed' }
       ],
