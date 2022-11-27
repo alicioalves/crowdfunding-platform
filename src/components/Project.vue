@@ -19,7 +19,8 @@
     </p>
 
     <p>
-      Goal: <span class="font-bold">{{ project.goalAmount }} ETH</span>
+      Goal: {{ convertToEth(this.project.goalAmount) }}
+      <span class="font-bold"> ETH</span>
     </p>
 
     <div>
@@ -48,14 +49,14 @@
     </div>
 
     <div class="flex items-center gap-4 px-10">
-      <p>{{ currentAmount }}</p>
+      <p>{{ convertToEth(currentAmount) }}</p>
       <div class="w-full bg-blue-100 rounded-full h-2.5">
         <div
           class="bg-blue-600 h-2.5 rounded-full"
           :style="calculatePercentage(project)"
         ></div>
       </div>
-      <p>{{ project.goalAmount }}</p>
+      <p>{{ convertToEth(project.goalAmount) }}</p>
     </div>
     <div>
       <p v-if="isLoading">Loading...</p>
@@ -126,7 +127,7 @@ export default {
         .contribute()
         .send({
           from: this.account,
-          value: web3.utils.toWei(this.fundAmount, 'ether')
+          value: this.convertToWei(this.fundAmount)
         })
         .then((res) => {
           const newTotal = parseInt(
@@ -155,6 +156,14 @@ export default {
         .then(() => {
           this.isLoading = false
         })
+    },
+
+    convertToWei(amount) {
+      return web3.utils.toWei(amount, 'ether')
+    },
+
+    convertToEth(amount) {
+      return web3.utils.fromWei(amount, 'ether')
     }
   }
 }
