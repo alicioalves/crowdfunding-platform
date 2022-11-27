@@ -15,6 +15,7 @@
 
     <template>
       <CreateProject
+        :account="account"
         v-if="shouldDisplayCreateProjectModal"
         @close="shouldDisplayCreateProjectModal = false"
       />
@@ -22,7 +23,7 @@
 
     <div class="flex flex-col items-center mt-5">
       <h1 class="font-bold text-xl">Projects</h1>
-      <Projects />
+      <Projects :account="account" />
     </div>
   </div>
 </template>
@@ -30,6 +31,8 @@
 <script>
 import CreateProject from '@/components/CreateProject'
 import Projects from '@/components/Projects.vue'
+
+import web3 from '../../contracts/web3'
 
 export default {
   name: 'HomeView',
@@ -40,8 +43,15 @@ export default {
 
   data() {
     return {
+      account: null,
       shouldDisplayCreateProjectModal: false
     }
+  },
+
+  mounted() {
+    web3.eth.getAccounts().then((accounts) => {
+      ;[this.account] = accounts
+    })
   }
 }
 </script>

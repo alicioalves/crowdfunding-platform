@@ -91,10 +91,16 @@ import web3 from '../../contracts/web3'
 
 export default {
   name: 'CreateProject',
+
+  props: {
+    account: {
+      type: String
+    }
+  },
+
   data() {
     return {
       startProjectDialog: false,
-      account: null,
       projectData: [],
       newProject: { isLoading: false }
     }
@@ -127,11 +133,6 @@ export default {
     closeModal() {
       this.$emit('close')
     }
-  },
-  mounted() {
-    web3.eth.getAccounts().then((accounts) => {
-      ;[this.account] = accounts
-    })
   }
 }
 </script>

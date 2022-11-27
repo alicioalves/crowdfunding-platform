@@ -6,6 +6,7 @@
       v-for="project in projectData"
       :key="project.name"
       :project="project"
+      :account="account"
     />
   </div>
 </template>
@@ -18,7 +19,15 @@ import Project from '@/components/Project.vue'
 
 export default {
   name: 'Projects',
+
   components: { Project },
+
+  props: {
+    account: {
+      type: String
+    }
+  },
+
   data() {
     return {
       projectData: []
