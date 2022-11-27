@@ -24,18 +24,13 @@
 
       <div class="flex flex-col">
         <label for="duration">Duration (in days)</label>
-        <input
-          type="number"
-          name="duration"
-          v-model="newProject.duration"
-          @click="startProject()"
-        />
+        <input type="number" name="duration" v-model="newProject.duration" />
       </div>
     </div>
 
     <div class="flex justify-around">
       <button>CLOSE</button>
-      <button>SAVE</button>
+      <button @click="startProject()">SAVE</button>
     </div>
   </div>
 </template>
