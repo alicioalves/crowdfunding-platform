@@ -31,7 +31,6 @@ export default {
 
   methods: {
     getProjects() {
-      console.log('crowdfundInstance: ', crowdfundInstance)
       crowdfundInstance.methods
         .returnAllProjects()
         .call()

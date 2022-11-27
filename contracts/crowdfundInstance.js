@@ -90,8 +90,6 @@ const abi = [
   }
 ]
 
-console.log(abi)
-
 const instance = new web3.eth.Contract(abi, address)
 
 export default instance
