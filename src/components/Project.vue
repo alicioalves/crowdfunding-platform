@@ -57,8 +57,8 @@
       >
         GET REFUND
       </button>
-      <p v-if="shouldDisableFunding" class="text-red-600">
-        You can't fund your own project.
+      <p v-if="shouldShowErrorMessage" class="text-red-600">
+        {{ errorMessage }}
       </p>
     </div>
 
@@ -104,7 +104,22 @@ export default {
       fundAmount: null,
       isLoading: false,
       updatedAmount: null,
-      updatedState: null
+      updatedState: null,
+      errorMessage: null,
+      shouldShowErrorMessage: false
+    }
+  },
+
+  watch: {
+    fundAmount() {
+      if (this.account == this.project.projectStarter) {
+        this.shouldShowErrorMessage = true
+        this.errorMessage = "You can't fund your own project"
+        return
+      }
+      this.shouldShowErrorMessage = false
+      this.errorMessage = ''
+      return
     }
   },
 
