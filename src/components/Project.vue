@@ -29,12 +29,21 @@
         placeholder="0 ETH"
         class="border-b border-black mr-2"
         v-model="fundAmount"
+        :disabled="project.currentState == 1 || project.currentState == 2"
       />
       <button
+        v-if="project.currentState == 0"
         class="px-6 py-2.5 mb-10 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
         @click="fundProject()"
       >
         FUND
+      </button>
+      <button
+        v-if="project.currentState == 1"
+        class="px-6 py-2.5 mb-10 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        @click="getRefund()"
+      >
+        GET REFUND
       </button>
     </div>
 
@@ -132,6 +141,19 @@ export default {
           if (newTotal >= projectGoal) {
             this.updatedState = 2
           }
+        })
+    },
+
+    getRefund() {
+      this.isLoading = true
+      const projectContract = this.project.contract
+      projectContract.methods
+        .getRefund()
+        .send({
+          from: this.account
+        })
+        .then(() => {
+          this.isLoading = false
         })
     }
   }
